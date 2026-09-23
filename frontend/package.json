@@ -1,0 +1,9 @@
+{
+  "name": "skeuolab-web",
+  "version": "1.0.0",
+  "description": "SkeuoLab Interactive Skeuomorphic Design Laboratory - Flutter Web",
+  "private": true,
+  "scripts": {
+    "build": "bash build.sh"
+  }
+}
