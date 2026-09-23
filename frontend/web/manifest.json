@@ -1,0 +1,40 @@
+{
+    "name": "SkeuoLab — Skeuomorphic Material & Theme Palette Studio",
+    "short_name": "SkeuoLab",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#0C0805",
+    "theme_color": "#140D08",
+    "description": "An authentic skeuomorphic material palette and physical tactile UI instrumentation studio built with Flutter.",
+    "orientation": "any",
+    "prefer_related_applications": false,
+    "categories": [
+        "design",
+        "utilities",
+        "developer-tools"
+    ],
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}

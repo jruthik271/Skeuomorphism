@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+
+  <!-- Primary SEO Meta Tags -->
+  <title>SkeuoLab — Skeuomorphic Material & Theme Palette Studio</title>
+  <meta name="title" content="SkeuoLab — Skeuomorphic Material & Theme Palette Studio">
+  <meta name="description" content="Explore an authentic skeuomorphic design system in Flutter featuring turned brass, brushed aluminum, dark walnut timber, cathode phosphor screens, and tactile physical physics.">
+  <meta name="keywords" content="flutter, skeuomorphism, skeuomorphic, material design, theme palette, ui design, tactile ui, brass, aluminum, webapp">
+  <meta name="author" content="SkeuoLab">
+  <meta name="theme-color" content="#140D08">
+
+  <!-- Open Graph / Facebook / LinkedIn -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SkeuoLab — Skeuomorphic Material & Theme Palette Studio">
+  <meta property="og:description" content="Explore an authentic skeuomorphic design system featuring turned brass, brushed aluminum, dark walnut, and tactile physical controls.">
+  <meta property="og:site_name" content="SkeuoLab">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="SkeuoLab — Skeuomorphic Material & Theme Palette Studio">
+  <meta property="twitter:description" content="Authentic skeuomorphic material palette studio and tactile UI instrumentation built with Flutter.">
+
+  <!-- iOS PWA meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="SkeuoLab">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Web Audio Synthesis Script for Tactile Clicks -->
+  <script>
+    window.playSkeuoSound = function(type) {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        if (!window._skeuoAudioCtx) {
+          window._skeuoAudioCtx = new AudioCtx();
+        }
+        const ctx = window._skeuoAudioCtx;
+        if (ctx.state === 'suspended') {
+          ctx.resume();
+        }
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        const now = ctx.currentTime;
+        if (type === 'click') {
+          osc.frequency.setValueAtTime(1400, now);
+          osc.frequency.exponentialRampToValueAtTime(320, now + 0.025);
+          gain.gain.setValueAtTime(0.18, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.025);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.03);
+        } else if (type === 'clack') {
+          osc.frequency.setValueAtTime(500, now);
+          osc.frequency.exponentialRampToValueAtTime(140, now + 0.04);
+          gain.gain.setValueAtTime(0.24, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.045);
+        } else if (type === 'tick') {
+          osc.frequency.setValueAtTime(2200, now);
+          gain.gain.setValueAtTime(0.09, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.015);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.018);
+        }
+      } catch(e) {}
+    };
+  </script>
+
+  <!-- Skeuomorphic Loading Splash CSS -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0C0805;
+      color: #E2E6EA;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    #skeuo-splash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 50% 40%, #1A120B 0%, #0C0805 100%);
+      z-index: 99999;
+      transition: opacity 0.45s ease-out;
+    }
+
+    .splash-chassis {
+      width: 340px;
+      padding: 24px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #2B3037 0%, #1A1D21 50%, #121417 100%);
+      border: 1.5px solid #3E4651;
+      box-shadow: 
+        0 20px 40px rgba(0,0,0,0.85),
+        inset 0 1px 2px rgba(255,255,255,0.25),
+        inset 0 -2px 4px rgba(0,0,0,0.6);
+      text-align: center;
+      position: relative;
+    }
+
+    .screw {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #FFFFFF 0%, #B5BDC6 40%, #5E6570 100%);
+      border: 0.8px solid #282C31;
+      box-shadow: inset 0 0.5px 1px rgba(255,255,255,0.5), 0 1px 2px rgba(0,0,0,0.5);
+    }
+    .screw::after {
+      content: '';
+      position: absolute;
+      top: 4.5px;
+      left: 1.5px;
+      width: 7px;
+      height: 1.2px;
+      background: #14171A;
+      transform: rotate(35deg);
+    }
+    .screw.tl { top: 8px; left: 8px; }
+    .screw.tr { top: 8px; right: 8px; }
+    .screw.bl { bottom: 8px; left: 8px; }
+    .screw.br { bottom: 8px; right: 8px; }
+
+    .splash-plate {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 4px;
+      background: linear-gradient(180deg, #FBE6A2 0%, #DFB660 30%, #B58832 70%, #735016 100%);
+      border: 1px solid #FFF3C4;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.7);
+      margin-bottom: 16px;
+    }
+
+    .splash-title {
+      font-family: serif;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: #382405;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.5), 0 -1px 0 rgba(0,0,0,0.3);
+      margin: 0;
+    }
+
+    .splash-screen {
+      background-color: #0E1A11;
+      border: 1.5px solid #040805;
+      border-radius: 6px;
+      padding: 14px;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.9), 0 1px 2px rgba(255,255,255,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .splash-screen::after {
+      content: " ";
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%);
+      background-size: 100% 3px;
+      pointer-events: none;
+    }
+
+    .crt-text {
+      font-family: monospace;
+      font-size: 11px;
+      font-weight: 800;
+      color: #39FF14;
+      text-shadow: 0 0 6px rgba(57, 255, 20, 0.65);
+      letter-spacing: 1.5px;
+      margin: 4px 0;
+    }
+
+    .led-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .led-lamp {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #FFFFFF 0%, #00FF66 40%, #0C471E 100%);
+      box-shadow: 0 0 8px #00FF66;
+      animation: pulse 1.2s infinite alternate ease-in-out;
+    }
+
+    .led-text {
+      font-family: monospace;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      color: #A0AAB5;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.4; box-shadow: 0 0 2px #00FF66; }
+      100% { opacity: 1.0; box-shadow: 0 0 10px #00FF66; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skeuomorphic Loading Splash -->
+  <div id="skeuo-splash">
+    <div class="splash-chassis">
+      <div class="screw tl"></div>
+      <div class="screw tr"></div>
+      <div class="screw bl"></div>
+      <div class="screw br"></div>
+      
+      <div class="splash-plate">
+        <h1 class="splash-title">SKEUOLAB // WORKBENCH</h1>
+      </div>
+
+      <div class="splash-screen">
+        <div class="crt-text">SYSTEM BOOTING...</div>
+        <div class="crt-text" style="font-size: 9.5px; color: #7AFF5C; opacity: 0.85;">CALIBRATING TELEMETRY & PHYSICAL CHASSIS</div>
+      </div>
+
+      <div class="led-row">
+        <div class="led-lamp"></div>
+        <div class="led-text">LOADING INSTRUMENTATION</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Remove splash once Flutter renders
+    window.addEventListener('flutter-first-frame', function() {
+      const splash = document.getElementById('skeuo-splash');
+      if (splash) {
+        splash.style.opacity = '0';
+        setTimeout(function() {
+          splash.remove();
+        }, 450);
+      }
+    });
+  </script>
+
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>

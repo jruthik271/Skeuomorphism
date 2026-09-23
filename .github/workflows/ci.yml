@@ -1,0 +1,69 @@
+name: SkeuoLab CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  backend-test:
+    name: Backend Test & Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install Dependencies
+        working-directory: backend
+        run: npm ci
+
+      - name: Compile TypeScript
+        working-directory: backend
+        run: npm run build
+
+      - name: Run Jest Test Suite
+        working-directory: backend
+        run: npm test
+
+  frontend-test:
+    name: Frontend Test & Web Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install Flutter Dependencies
+        working-directory: frontend
+        run: flutter pub get
+
+      - name: Run Flutter Analyzer
+        working-directory: frontend
+        run: flutter analyze
+
+      - name: Run Flutter Unit & Widget Tests
+        working-directory: frontend
+        run: flutter test
+
+      - name: Build Flutter Web Bundle
+        working-directory: frontend
+        run: flutter build web --release
